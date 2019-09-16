@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 // import { Table } from 'react-bootstrap';
-import { Table } from 'reactstrap';
+// import { Table } from 'reactstrap';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Topcontrols from './components/Topcontrols';
@@ -10,7 +10,7 @@ import axios from 'axios';
 import ModalAddItem from './components/ModalAddItem';
 import ModalEditFood from './components/ModalEditFood';
 import Foods from './components/Foods';
-import Nutrifacts from './components/Nutrifacts';
+// import Nutrifacts from './components/Nutrifacts';
 
 class App extends Component {
   constructor(props) {
@@ -56,7 +56,7 @@ class App extends Component {
     this.showMainApp = this.showMainApp.bind(this);
   }
 
-  componentWillMount() {
+  componentWilMount() {
     this.refreshFoods();
   }
 
@@ -73,24 +73,26 @@ class App extends Component {
   }
 
   addFood() {
-    axios.post('/foods', this.state.newFoodData).then(response => {
-      // console.log(response.data);
-      let { foods } = this.state;
+    axios
+      .post('http://localhost:3000/foods', this.state.newFoodData)
+      .then(response => {
+        // console.log(response.data);
+        let { foods } = this.state;
 
-      foods.push(response.data.food);
-      this.setState({
-        foods,
-        newFoodModal: false,
-        newFoodData: {
-          item: '',
-          quantity: '',
-          days_expiration: '',
-          location: '',
-          pic: '',
-          nutrifacts: ''
-        }
+        foods.push(response.data.food);
+        this.setState({
+          foods,
+          newFoodModal: false,
+          newFoodData: {
+            item: '',
+            quantity: '',
+            days_expiration: '',
+            location: '',
+            pic: '',
+            nutrifacts: ''
+          }
+        });
       });
-    });
   }
 
   updateFood() {
@@ -104,7 +106,7 @@ class App extends Component {
       nutrifacts
     } = this.state.editFoodData;
     axios
-      .put('/foods/' + this.state.editFoodData.id, {
+      .put('http://localhost:3000/foods/' + this.state.editFoodData.id, {
         item,
         quantity,
         days_expiration,
@@ -131,7 +133,7 @@ class App extends Component {
   }
 
   refreshFoods() {
-    axios.get('/foods').then(response => {
+    axios.get('http://localhost:3000/foods').then(response => {
       // console.log(response);
       this.setState({
         foods: response.data.foods
@@ -156,13 +158,13 @@ class App extends Component {
   }
 
   deleteFood(id) {
-    axios.delete('foods/' + id).then(response => {
+    axios.delete('http://localhost:3000/foods/' + id).then(response => {
       this.refreshFoods();
     });
   }
 
   showFridge(rd) {
-    axios.get('/foods').then(response => {
+    axios.get('http://localhost:3000/foods').then(response => {
       // console.log(response.data.foods);
       const filtered = response.data.foods.filter(rd => {
         return rd.location == 'fridge';
@@ -188,7 +190,7 @@ class App extends Component {
   }
 
   showPantry(rd) {
-    axios.get('/foods').then(response => {
+    axios.get('http://localhost:3000/foods').then(response => {
       // console.log(response.data.foods);
       const filtered = response.data.foods.filter(rd => {
         return rd.location == 'pantry';
@@ -214,7 +216,7 @@ class App extends Component {
   }
 
   showAll(rd) {
-    axios.get('/foods').then(response => {
+    axios.get('http://localhost:3000/foods').then(response => {
       // console.log(response.data.foods);
       const all = response.data.foods.map(rd => {
         return rd;
@@ -240,7 +242,7 @@ class App extends Component {
   }
 
   sortFoods(rd) {
-    axios.get('/foods').then(response => {
+    axios.get('http://localhost:3000/foods').then(response => {
       const tosort = response.data.foods;
       // console.log(tosort);
       const fsort = (a, b) => {
@@ -307,8 +309,8 @@ class App extends Component {
       );
     } else {
       return (
-        <div class='container1'>
-          <div class='cover'>
+        <div className='container1'>
+          <div className='cover'>
             {/* <!-- <img src="./fruits.png" alt="" /> --> */}
             <h1>
               F<span>🍎🍊D</span> TRACKER

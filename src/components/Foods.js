@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Table } from 'reactstrap';
-import Nutrifacts from './Nutrifacts';
+// import Nutrifacts from './Nutrifacts';
 class Foods extends Component {
   constructor(props) {
     super(props);
